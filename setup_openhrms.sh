@@ -3,7 +3,7 @@ set -euo pipefail
 
 ### ========= USER VARS =========
 DB_NAME="openhrms11"
-MASTER_PASSWORD="gzi8-ugye-ivxp"
+MASTER_PASSWORD="${ODOO_MASTER_PASSWORD:-gzi8-ugye-ivxp}"
 WITH_DEMO="0"                # 0 = no demo data, 1 = include demo data
 LANGUAGE="en_US"
 HOST_HTTP_PORT="8069"        # final URL -> http://localhost:8069/web

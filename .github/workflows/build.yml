@@ -1,7 +1,7 @@
 name: Test OpenHRMS Installation
 
 on:
-  workflow_dispatch:   
+  push:
 
 jobs:
   install-test:
@@ -14,7 +14,9 @@ jobs:
         run: chmod +x setup_openhrms.sh
 
       - name: Run OpenHRMS installer
-        run: sudo ./setup_openhrms.sh
+        env:
+          ODOO_MASTER_PASSWORD: ${{ secrets.ODOO_MASTER_PASSWORD }}
+        run: sudo -E ./setup_openhrms.sh
 
       - name: Smoke test Odoo/OpenHRMS frontend
         run: |
