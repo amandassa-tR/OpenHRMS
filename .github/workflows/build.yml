@@ -1,0 +1,30 @@
+name: Test OpenHRMS Installation
+
+on:
+  workflow_dispatch:   
+
+jobs:
+  install-test:
+    runs-on: ubuntu-18.04   
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Make installer executable
+        run: chmod +x setup_openhrms.sh
+
+      - name: Run OpenHRMS installer
+        run: sudo ./setup_openhrms.sh
+
+      - name: Smoke test Odoo/OpenHRMS frontend
+        run: |
+          echo "Checking http://localhost:8069/web?db=openhrms11"
+          for i in {1..30}; do
+            if curl -sSf "http://localhost:8069/web?db=openhrms11" >/dev/null; then
+              echo "✅ Frontend is up"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "❌ Frontend did not respond in time"
+          exit 1
